@@ -3,18 +3,29 @@ const getDataBase = require('../util/database').getDataBase;
 
 class Product {
 
-    constructor(title, description, price, imageUrl){
+    constructor(title, description, price, imageUrl, id){
 
         this.title = title;
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
+        this._id = id ? new mongodb.ObjectId(id) : null;
     };
 
-    save(){
+    saveProduct(){
 
         const dataBase = getDataBase();
-        return dataBase.collection('products').insertOne(this)
+        let dataBaseOp;
+
+        if (this._id){
+
+            dataBaseOp = dataBase.collection('products').updateOne({ _id: this._id }, { $set: this });
+        } else {
+
+            dataBaseOp = dataBase.collection('products').insertOne(this);
+        };
+
+        return  dataBaseOp
                 .then(result => {
                     
                     return result;
@@ -53,6 +64,19 @@ class Product {
                         .catch(err => {
 
                             console.log("Database error - Product not found", err);
+                        });
+    };
+
+    static deleteByIdProduct(prodId){
+
+        const dataBase = getDataBase();
+        return dataBase.collection('products').deleteOne({ _id: new mongodb.ObjectId(prodId) })
+                        .then(result => {
+                            console.log("Product deleted");
+                        })
+                        .catch(err => {
+
+                            console.log("Database error - Product not deleted", err);
                         });
     };
 };

@@ -7,11 +7,16 @@
 
 body{
     padding: 0;
-    margin: 0%;
+    margin: 0;
     font-family: 'Open Sans', sans-serif;
 }
 
-form{
+main{
+  padding: 1rem;
+  margin: auto;
+}
+
+form {
   display: inline;
 }
 
@@ -188,7 +193,7 @@ form{
     padding: 0.25rem 1rem;
     text-decoration: none;
     font: inherit;
-    border: 1px soli violet;
+    border: 1px solid violet;
     color: violet;
     background: white;
     border-radius: 3px;
@@ -200,6 +205,17 @@ form{
       background-color: violet;
       color: white;
   }  
+
+  .btn.danger {
+    color: red;
+    border-color: red;
+  }
+
+  .btn.danger:hover,
+  .btn.danger:active {
+  background: red;
+  color: white;
+}
 
   @media (min-width: 768px) {
     .main-header__nav {
